@@ -46,6 +46,9 @@ def dag():
         profile_config=profile_config,
         execution_config=execution_config,
         render_config=render_config,
+        dbt_args={
+            "install_deps": True,
+        }
     )
 
     from cosmos.operators import DbtDocsS3Operator
