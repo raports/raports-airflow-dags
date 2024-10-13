@@ -1,5 +1,6 @@
 from airflow.decorators import dag
 from airflow.providers.postgres.operators.postgres import PostgresOperator
+from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperator
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig
 from cosmos.constants import TestBehavior
 
@@ -38,7 +39,15 @@ render_config=RenderConfig(
     catchup=False,
 )
 def dag():
-    # run_airbyte = Ai
+
+    run_airbyte = AirbyteTriggerSyncOperator(
+        task_id='run_airbyte',
+        airbyte_conn_id='airbyte',
+        connection_id='2bc15a9f-5565-4779-8663-fe3247989044',
+        asynchronous=False,
+        timeout=3600,
+        wait_seconds=3
+    )
 
     dbt_run = DbtTaskGroup(
         group_id="dbt_run",
@@ -64,6 +73,6 @@ def dag():
         install_deps=True
     )
 
-    dbt_run >> generate_dbt_docs_s3
+    run_airbyte >> dbt_run >> generate_dbt_docs_s3
 
 dag()
