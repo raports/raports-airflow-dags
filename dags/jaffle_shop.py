@@ -10,7 +10,7 @@ import os
 
 DAG_ID = "jaffle_shop_pipeline"
 CONNECTION_ID = "dwh"
-DBT_PROJECT_PATH = f"{os.environ['PWD']}/dbt/jaffle-shop"
+DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/dbt/jaffle-shop"
 DBT_EXECUTABLE_PATH = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
 
 
