@@ -61,9 +61,7 @@ def dag():
         bucket_name="dbt-docs",
         dbt_executable_path=DBT_EXECUTABLE_PATH,
         folder_dir=DAG_ID,
-        operator_args={
-            "install_deps": True
-        }
+        install_deps=True
     )
 
     dbt_run >> generate_dbt_docs_s3
