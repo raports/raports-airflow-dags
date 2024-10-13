@@ -46,8 +46,8 @@ def dag():
         profile_config=profile_config,
         execution_config=execution_config,
         render_config=render_config,
-        dbt_args={
-            "install_deps": True,
+        operator_args={
+            "install_deps": True
         }
     )
 
