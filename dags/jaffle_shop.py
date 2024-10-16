@@ -9,7 +9,7 @@ from cosmos.profiles import PostgresUserPasswordProfileMapping
 from pendulum import datetime
 import os
 
-DAG_ID = "jaffle_shop_pipeline"
+DAG_ID = "jaffle_shop"
 CONNECTION_ID = "dwh"
 DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/dbt/jaffle-shop"
 DBT_EXECUTABLE_PATH = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
