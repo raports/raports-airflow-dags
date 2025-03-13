@@ -13,7 +13,7 @@ SLING_FILE_PATH = f'{os.environ["AIRFLOW_HOME"]}/dags/repo/dags/{DAG_ID}/sling_m
 S3_BUCKET = 'app-metrica'
 
 s3_conn = BaseHook.get_connection(conn_id='default_minio.raports.net')
-dwh_conn = BaseHook.get_connection(conn_id='dwh_postgres.raports.net')
+dwh_conn = BaseHook.get_connection(conn_id='dwh_postgresql.raports.net')
 
 @dag(
     dag_id=DAG_ID,
