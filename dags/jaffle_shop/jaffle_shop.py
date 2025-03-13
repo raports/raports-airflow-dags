@@ -70,7 +70,8 @@ def dag():
         bucket_name="dbt-docs",
         dbt_executable_path=DBT_EXECUTABLE_PATH,
         folder_dir=DAG_ID,
-        install_deps=True
+        install_deps=True,
+        outlets=[]
     )
 
     run_airbyte >> run_dbt >> generate_dbt_docs_to_s3
