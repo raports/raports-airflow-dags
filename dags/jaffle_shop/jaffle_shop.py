@@ -67,7 +67,7 @@ def dag():
         profile_config=profile_config,
         project_dir=DBT_PROJECT_PATH,
         connection_id="default_minio.raports.net",
-        bucket_name="dbt",
+        bucket_name="dbt-docs",
         dbt_executable_path=DBT_EXECUTABLE_PATH,
         folder_dir=DAG_ID,
         install_deps=True
