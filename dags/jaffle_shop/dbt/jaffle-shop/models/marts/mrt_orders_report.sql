@@ -1,19 +1,19 @@
 with
 
 order_items as (
-    select * from {{ ref('stg_order_items') }}
+    select * from {{ ref('fct_order_items') }}
 ),
 
 orders as (
-    select * from {{ ref('stg_orders') }}
+    select * from {{ ref('dim_orders') }}
 ),
 
 products as (
-    select * from {{ ref('stg_products') }}
+    select * from {{ ref('dim_products') }}
 ),
 
 supplies as (
-    select * from {{ ref('stg_supplies') }}
+    select * from {{ ref('fct_supplies') }}
 ),
 
 order_supplies_summary as (

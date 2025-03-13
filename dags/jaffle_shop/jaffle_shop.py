@@ -10,7 +10,7 @@ from pendulum import datetime
 import os
 
 DAG_ID = "jaffle_shop"
-CONNECTION_ID = "dwh"
+
 DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/jaffle_shop/dbt/jaffle-shop"
 DBT_EXECUTABLE_PATH = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
 
@@ -19,13 +19,9 @@ profile_config = ProfileConfig(
     profile_name="dwh",
     target_name="dev",
     profile_mapping=PostgresUserPasswordProfileMapping(
-        conn_id="dwh",
+        conn_id="dwh_postgresql.raports.net",
         profile_args={"schema": 'public'},
     ),
-)
-
-execution_config = ExecutionConfig(
-    dbt_executable_path=DBT_EXECUTABLE_PATH,
 )
 
 render_config=RenderConfig(
@@ -42,19 +38,23 @@ def dag():
 
     run_airbyte = AirbyteTriggerSyncOperator(
         task_id='run_airbyte',
-        airbyte_conn_id='airbyte',
-        connection_id='2bc15a9f-5565-4779-8663-fe3247989044',
+        airbyte_conn_id='default_airbyte.raports.net',
+        connection_id='50c7a352-0c75-4208-ba43-267bf6941d7b',
         asynchronous=False,
         timeout=3600,
         wait_seconds=3
     )
 
-    dbt_run = DbtTaskGroup(
-        group_id="dbt_run",
+    run_dbt = DbtTaskGroup(
+        group_id="run_dbt",
         project_config=ProjectConfig(DBT_PROJECT_PATH),
         profile_config=profile_config,
-        execution_config=execution_config,
-        render_config=render_config,
+        execution_config=ExecutionConfig(
+            dbt_executable_path=DBT_EXECUTABLE_PATH,
+        ),
+        render_config=RenderConfig(
+            test_behavior=TestBehavior.AFTER_ALL,
+        ),
         operator_args={
             "install_deps": True
         }
@@ -62,17 +62,17 @@ def dag():
 
     from cosmos.operators import DbtDocsS3Operator
 
-    generate_dbt_docs_s3 = DbtDocsS3Operator(
-        task_id="generate_dbt_docs_s3",
+    generate_dbt_docs_to_s3 = DbtDocsS3Operator(
+        task_id="generate_dbt_docs_to_s3",
         profile_config=profile_config,
         project_dir=DBT_PROJECT_PATH,
-        connection_id="minio",
+        connection_id="default_minio.raports.net",
         bucket_name="dbt-docs",
         dbt_executable_path=DBT_EXECUTABLE_PATH,
         folder_dir=DAG_ID,
         install_deps=True
     )
 
-    run_airbyte >> dbt_run >> generate_dbt_docs_s3
+    run_airbyte >> run_dbt >> generate_dbt_docs_to_s3
 
 dag()

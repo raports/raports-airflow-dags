@@ -5,7 +5,7 @@ orders as (
 ),
 
 order_items as (
-    select * from {{ ref('order_items') }}
+    select * from {{ ref("mrt_orders_report") }}
 ),
 
 order_items_summary as (

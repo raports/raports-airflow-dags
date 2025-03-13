@@ -1,6 +1,7 @@
 with
+
 source as (
-    select * from {{ source('ecom', 'raw_supplies') }}
+    select * from {{ source('jaffle_shop', 'raw_supplies') }}
 ),
 
 renamed as (

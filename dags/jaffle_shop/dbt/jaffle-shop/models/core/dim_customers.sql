@@ -5,7 +5,7 @@ customers as (
 ),
 
 orders as (
-    select * from {{ ref('orders') }}
+    select * from {{ ref("mrt_customers_report") }}
 ),
 
 customer_orders_summary as (

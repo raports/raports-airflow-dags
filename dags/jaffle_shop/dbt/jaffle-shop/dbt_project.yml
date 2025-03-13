@@ -23,9 +23,19 @@ vars:
 
 models:
   jaffle_shop:
+    +schema: jaffle_shop
+    +grants:
+      select: ['viewers_all', 'writers_all']
     staging:
-      +schema: stage_shop
       +materialized: view
-    marts:
-      +schema: mart_shop
+    intermediate:
+      +materialized: ephemeral
+    core:
       +materialized: table
+    marts:
+      +materialized: table
+
+seeds:
+  +schema: stage_shop
+  +grants:
+    select: ['viewers_all', 'writers_all']
