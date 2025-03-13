@@ -1,11 +1,11 @@
 from airflow.decorators import dag
-from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperator
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig
 from cosmos.constants import TestBehavior
 
 # adjust for other database types
 from cosmos.profiles import PostgresUserPasswordProfileMapping
+from cosmos.operators import DbtDocsS3Operator
 from pendulum import datetime
 import os
 
@@ -60,7 +60,6 @@ def dag():
         }
     )
 
-    from cosmos.operators import DbtDocsS3Operator
 
     generate_dbt_docs_to_s3 = DbtDocsS3Operator(
         task_id="generate_dbt_docs_to_s3",
