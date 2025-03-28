@@ -1,4 +1,5 @@
 from airflow.decorators import dag
+from airflow.models import Variable
 from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperator
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig
 from cosmos.constants import TestBehavior
@@ -39,7 +40,7 @@ def dag():
     run_airbyte = AirbyteTriggerSyncOperator(
         task_id='run_airbyte',
         airbyte_conn_id='default_airbyte.raports.net',
-        connection_id='50c7a352-0c75-4208-ba43-267bf6941d7b',
+        connection_id=Variable.get('minio jaffle-shop → postgres dwh'),
         asynchronous=False,
         timeout=3600,
         wait_seconds=3
