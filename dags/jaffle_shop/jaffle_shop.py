@@ -40,7 +40,7 @@ def dag():
     run_airbyte = AirbyteTriggerSyncOperator(
         task_id='run_airbyte',
         airbyte_conn_id='default_airbyte.raports.net',
-        connection_id=Variable.get('airflow-jaffle-shop'),
+        connection_id=Variable.get('airbyte-jaffle-shop'),
         asynchronous=False,
         timeout=3600,
         wait_seconds=3
