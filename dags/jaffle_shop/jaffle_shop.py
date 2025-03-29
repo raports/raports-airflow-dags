@@ -10,9 +10,9 @@ from cosmos.operators import DbtDocsS3Operator
 from pendulum import datetime
 import os
 
-DAG_ID = "jaffle_shop"
+DAG_ID = "dbt_jaffle_shop"
 
-DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/jaffle_shop/dbt/jaffle-shop"
+DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/dbt/dbt_{DAG_ID}"
 DBT_EXECUTABLE_PATH = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
 
 
@@ -40,7 +40,7 @@ def dag():
     run_airbyte = AirbyteTriggerSyncOperator(
         task_id='run_airbyte',
         airbyte_conn_id='default_airbyte.raports.net',
-        connection_id=Variable.get('minio jaffle-shop → postgres dwh'),
+        connection_id=Variable.get('minio dbt_jaffle_shop → postgres dwh'),
         asynchronous=False,
         timeout=3600,
         wait_seconds=3

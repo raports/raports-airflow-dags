@@ -1,6 +1,6 @@
 config-version: 2
 
-name: "jaffle_shop"
+name: "dbt_jaffle_shop"
 version: "3.0.0"
 require-dbt-version: ">=1.5.0"
 
@@ -23,7 +23,7 @@ vars:
 
 models:
   jaffle_shop:
-    +schema: jaffle_shop
+    +schema: dbt_jaffle_shop
     +grants:
       select: ['viewers_all', 'writers_all']
     staging:

@@ -1,8 +1,8 @@
 version: 2
 
 sources:
-  - name: jaffle_shop
-    schema: jaffle_shop
+  - name: dbt_jaffle_shop
+    schema: dbt_jaffle_shop
     description: E-commerce data for the Jaffle Shop
     freshness:
       warn_after:
