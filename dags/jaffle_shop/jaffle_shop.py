@@ -40,7 +40,7 @@ def dag():
     run_airbyte = AirbyteTriggerSyncOperator(
         task_id='run_airbyte',
         airbyte_conn_id='default_airbyte.raports.net',
-        connection_id=Variable.get('minio dbt_jaffle_shop → postgres dwh'),
+        connection_id=Variable.get('airflow-jaffle-shop'),
         asynchronous=False,
         timeout=3600,
         wait_seconds=3
@@ -70,8 +70,7 @@ def dag():
         bucket_name="dbt-docs",
         dbt_executable_path=DBT_EXECUTABLE_PATH,
         folder_dir=DAG_ID,
-        install_deps=True,
-        outlets=[]
+        install_deps=True
     )
 
     run_airbyte >> run_dbt >> generate_dbt_docs_to_s3
