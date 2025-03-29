@@ -10,7 +10,7 @@ from cosmos.operators import DbtDocsS3Operator
 from pendulum import datetime
 import os
 
-DAG_ID = "dbt_jaffle_shop"
+DAG_ID = "jaffle_shop"
 
 DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/dbt/dbt_{DAG_ID}"
 DBT_EXECUTABLE_PATH = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
