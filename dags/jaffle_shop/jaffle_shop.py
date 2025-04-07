@@ -18,7 +18,7 @@ DBT_EXECUTABLE_PATH = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
 
 profile_config = ProfileConfig(
     profile_name="dwh",
-    target_name="dev",
+    target_name="prod",
     profile_mapping=PostgresUserPasswordProfileMapping(
         conn_id="dwh_postgresql.raports.net",
         profile_args={"schema": 'public'},
