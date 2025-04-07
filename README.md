@@ -2,31 +2,16 @@
 
 Dags for Raports Airflow
 
-### Running Astro
+## Building image and running it
 
-Star dev env with
+Build it with
 
-```
-astro dev start
-```
-
-This command will install all requirements and packages into Dockerfile, build it and run docker-compose with astro environment
-
-Stop environment with
-
-```
-astro dev stop
+```shell
+docker buildx build --platform=linux/amd64 -t ramiskhasianov/airflow-raports:2.10.5 .
 ```
 
-### DBT
+publish it with 
 
-DBT projects are under `dags/dbt`
-
-To run them `cd` into a projects and use this commands
-
-- `dbt init` to initialize new project
-- `dbt debug` to test connection
-- `dbt run` to run your project, create models in database
-- `dbt test` to run tests
-- `dbt docs generate` to generate docs - `manifest.json` file
-- `dbt docs serve` to launch webapp to browse docs locally
+```shell
+docker push ramiskhasianov/airflow-raports:2.10.5
+```

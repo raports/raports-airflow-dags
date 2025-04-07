@@ -1,7 +1,7 @@
 with
 
 source as (
-    select * from {{ source('dbt_jaffle_shop', 'raw_stores') }}
+    select * from {{ source('jaffle_shop', 'raw_stores') }}
 ),
 
 renamed as (

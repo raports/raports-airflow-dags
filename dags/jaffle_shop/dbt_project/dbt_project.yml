@@ -1,10 +1,10 @@
 config-version: 2
 
-name: "dbt_jaffle_shop"
+name: "dbt_project"
 version: "3.0.0"
 require-dbt-version: ">=1.5.0"
 
-profile: dwh_test # Put your profile here
+profile: "dbt_dev" # Put your profile here
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -22,8 +22,8 @@ vars:
   "dbt_date:time_zone": "America/Los_Angeles"
 
 models:
-  jaffle_shop:
-    +schema: dbt_jaffle_shop
+  dbt_project:
+    +schema: jaffle_shop
     +grants:
       select: ['viewers_all', 'writers_all']
     staging:
@@ -36,6 +36,7 @@ models:
       +materialized: table
 
 seeds:
-  +schema: stage_shop
-  +grants:
-    select: ['viewers_all', 'writers_all']
+  dbt_project:
+    +schema: jaffle_shop
+    +grants:
+      select: ['viewers_all', 'writers_all']

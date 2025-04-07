@@ -1,7 +1,6 @@
-# Astro Runtime includes the following pre-installed providers packages: https://docs.astronomer.io/astro/runtime-image-architecture#provider-packages
-astronomer-cosmos==1.7.0
-apache-airflow-providers-postgres==5.13.0
-apache-airflow-providers-airbyte==3.9.0
-dbt-clickhouse==1.8.4
-dbt-postgres==1.8.2
+astronomer-cosmos==1.9.2
+apache-airflow-providers-postgres==6.0.0
+apache-airflow-providers-airbyte==5.0.1
+dbt-clickhouse==1.8.9
+dbt-postgres==1.9.0
 clickhouse-driver==0.2.9
