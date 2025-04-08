@@ -37,10 +37,6 @@ with open(SLING_FILE_PATH) as file:
     dag_id=DAG_ID,
     schedule_interval=None,
     start_date=datetime(2022, 1, 1),
-    schedule=DatasetOrTimeSchedule(
-        timetable=CronTriggerTimetable("0 0 1 * *", timezone="UTC"),
-        datasets=(Dataset(f"s3://{S3_BUCKET}/*.csv")),
-    ),
     catchup=False,
     tags=['sling', 'minio', 'clickhouse'],
     doc_md=readme_content
