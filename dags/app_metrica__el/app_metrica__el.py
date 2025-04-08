@@ -39,7 +39,8 @@ with open(README_FILE_PATH, "r") as readme_file:
     schedule_interval=None,
     start_date=datetime(2022, 1, 1),
     catchup=False,
-    tags=['sling', 'minio', 'clickhouse']
+    tags=['sling', 'minio', 'clickhouse'],
+    doc_md=readme_content
 )
 def app_metrica():
     create_base_table = ClickHouseOperator(
