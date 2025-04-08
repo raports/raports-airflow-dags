@@ -26,7 +26,6 @@ with open(README_FILE_PATH, "r") as readme_file:
     readme_content = readme_file.read()
 
 with open(SLING_FILE_PATH) as file:
-    file.seek(0)
     readme_content = f'''
         {readme_content}\n\n
         # Sling file\n\n
