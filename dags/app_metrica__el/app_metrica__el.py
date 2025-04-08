@@ -25,7 +25,7 @@ clickhouse_conn = BaseHook.get_connection(conn_id='default_clickhouse.raports.ne
 def app_metrica():
     sling_task = BashOperator(
         task_id='run_sling',
-        bash_command=f"sling run -r {SLING_FILE_PATH}",
+        bash_command=f"sling run -r {SLING_FILE_PATH} -d",
         env={
             'PATH': '/home/airflow/.local/bin',
             'minio_app_metrica': f'''{{
