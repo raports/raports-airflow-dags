@@ -73,7 +73,7 @@ def app_metrica():
         clickhouse_conn_id=clickhouse_conn.conn_id,
         sql='''
             create table if not exists app_metrica.raw_usage_metrics_distributed on cluster default
-            as app_metrica.raw_usage_metrics_export
+            as app_metrica.raw_usage_metrics
             engine = Distributed(default, app_metrica, raw_usage_metrics, cityHash64(os_name));
         '''
     )
