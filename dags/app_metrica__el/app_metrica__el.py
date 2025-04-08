@@ -80,7 +80,7 @@ def app_metrica():
         task_id='run_sling',
         outlets=[
             Dataset(f'clickhouse://{clickhouse_conn.host}:{clickhouse_conn.port}/app_metrica.raw_usage_metrics_distributed'),
-            Dataset(f'clickhouse://{clickhouse_conn.host}:{clickhouse_conn.port}/app_metrica.raw_usage_metrics'),
+            Dataset(f'clickhouse://{clickhouse_conn.host}:{clickhouse_conn.port}/app_metrica.raw_usage_metrics')
         ],
         bash_command=f"sling run -r {SLING_FILE_PATH} -d",
         env={
