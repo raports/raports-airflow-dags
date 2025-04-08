@@ -1,0 +1,30 @@
+source: minio_app_metrica
+target: clickhouse
+
+defaults:
+  mode: incremental
+  update_key: _sling_loaded_at
+  source_options:
+    format: csv
+
+streams:
+  "*.csv":
+    single: true
+    target_options:
+      batch_limit: 2000000
+    object: 'app_metrica.raw_usage_metrics_distributed'
+    columns:
+      date: date
+      event: string(30)
+      purchase_sum: decimal(12, 2)
+      os_name: string(20)
+      device_id: string(20)
+      gender: string(10)
+      city: string(50)
+      utm_source: string(30)
+
+env:
+  SLING_LOADED_AT_COLUMN: timestamp
+  SLING_STREAM_URL_COLUMN: true
+  SLING_EXEC_ID_COLUMN: true
+  SLING_ROW_NUM_COLUMN: true

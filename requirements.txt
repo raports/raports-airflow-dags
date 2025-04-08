@@ -4,3 +4,6 @@ apache-airflow-providers-airbyte==5.0.1
 dbt-clickhouse==1.8.9
 dbt-postgres==1.9.0
 clickhouse-driver==0.2.9
+
+apache-airflow==2.10.5
+pendulum==3.0.0
