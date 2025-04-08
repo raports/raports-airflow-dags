@@ -26,7 +26,7 @@ with open(README_FILE_PATH, "r") as readme_file:
     readme_content = readme_file.read()
 
 with open(SLING_FILE_PATH) as sling_file:
-    readme_content = f'''{readme_content}\n\n# Sling file\n\nThis DAG uses Sling replication yaml:\n\n```yaml\n{sling_file.read()}\n```'''
+    readme_content = f'{readme_content}\n\n## Sling file\n\nThis DAG uses Sling replication yaml:\n\n```yaml\n{sling_file.read()}\n```'
 
 
 @dag(
