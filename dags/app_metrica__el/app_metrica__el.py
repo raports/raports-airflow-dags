@@ -1,15 +1,18 @@
 import os
 import json
+from datetime import datetime
 
 from airflow import Dataset
 from airflow.decorators import dag
-from airflow.operators.bash import BashOperator
 from airflow.hooks.base import BaseHook
-from datetime import datetime
-
+from airflow.operators.bash import BashOperator
+from airflow.timetables.datasets import DatasetOrTimeSchedule
+from airflow.timetables.trigger import CronTriggerTimetable
 from airflow_clickhouse_plugin.operators.clickhouse import ClickHouseOperator
 
+
 DAG_ID = 'app_metrica__el'
+
 
 README_FILE_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/README.md"
 
@@ -35,6 +38,10 @@ with open(SLING_FILE_PATH) as file:
     dag_id=DAG_ID,
     schedule_interval=None,
     start_date=datetime(2022, 1, 1),
+    schedule=DatasetOrTimeSchedule(
+        timetable=CronTriggerTimetable("0 0 1 * *", timezone="UTC"),
+        datasets=(Dataset(f"s3://{S3_BUCKET}/*.csv")),
+    ),
     catchup=False,
     tags=['sling', 'minio', 'clickhouse'],
     doc_md=readme_content
