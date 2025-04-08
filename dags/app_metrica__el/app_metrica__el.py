@@ -17,7 +17,7 @@ clickhouse_conn = BaseHook.get_connection(conn_id='default_clickhouse.raports.ne
 
 @dag(
     dag_id=DAG_ID,
-    schedule_interval='@daily',
+    schedule_interval=None,
     start_date=datetime(2022, 1, 1),
     catchup=False,
     tags=['sling']
