@@ -1,6 +1,7 @@
 import os
 import json
 
+from airflow import Dataset
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 from airflow.hooks.base import BaseHook
@@ -15,6 +16,9 @@ README_FILE_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/README
 SLING_FILE_PATH = f'{os.environ["AIRFLOW_HOME"]}/dags/repo/dags/{DAG_ID}/sling_minio_to_clickhouse.yaml'
 S3_BUCKET = 'app-metrica'
 
+s3_conn = BaseHook.get_connection(conn_id='default_minio.raports.net')
+clickhouse_conn = BaseHook.get_connection(conn_id='default_clickhouse.raports.net')
+
 with open(README_FILE_PATH, "r") as readme_file:
     readme_content = readme_file.read()
 
@@ -25,13 +29,6 @@ with open(SLING_FILE_PATH) as file:
         # Sling file\n\n
         This DAG uses Sling replication yaml:\n\n
         ```yaml\n{file.read()}\n```'''
-
-s3_conn = BaseHook.get_connection(conn_id='default_minio.raports.net')
-clickhouse_conn = BaseHook.get_connection(conn_id='default_clickhouse.raports.net')
-
-
-with open(README_FILE_PATH, "r") as readme_file:
-    readme_content = readme_file.read()
 
 
 @dag(
@@ -81,6 +78,10 @@ def app_metrica():
 
     run_sling = BashOperator(
         task_id='run_sling',
+        outlets=[
+            Dataset(f'clickhouse://{clickhouse_conn.host}:{clickhouse_conn.port}/app_metrica.raw_usage_metrics_distributed'),
+            Dataset(f'clickhouse://{clickhouse_conn.host}:{clickhouse_conn.port}/app_metrica.raw_usage_metrics'),
+        ],
         bash_command=f"sling run -r {SLING_FILE_PATH} -d",
         env={
             'PATH': '/home/airflow/.local/bin',
