@@ -1,13 +1,11 @@
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from airflow import Dataset
 from airflow.decorators import dag
 from airflow.hooks.base import BaseHook
 from airflow.operators.bash import BashOperator
-from airflow.timetables.datasets import DatasetOrTimeSchedule
-from airflow.timetables.trigger import CronTriggerTimetable
 from airflow_clickhouse_plugin.operators.clickhouse import ClickHouseOperator
 
 
@@ -34,8 +32,15 @@ with open(SLING_FILE_PATH) as sling_file:
     schedule_interval=None,
     start_date=datetime(2022, 1, 1),
     catchup=False,
+    doc_md=readme_content,
     tags=['sling', 'minio', 'clickhouse'],
-    doc_md=readme_content
+    default_args={
+        'owner': 'ramis.khasianov',
+        'retries': 3,
+        'retry_delay': timedelta(minutes=5),
+        'email_on_failure': True,
+        'email': ['ramis.khasianov@raports.net']
+    }
 )
 def app_metrica():
     create_base_table = ClickHouseOperator(
