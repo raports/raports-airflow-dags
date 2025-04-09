@@ -7,7 +7,7 @@ from airflow.models import Variable
 from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperator
 
 
-DAG_ID = "jaffle_shop__t"
+DAG_ID = "jaffle_shop__el"
 
 README_FILE_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/README.md"
 
