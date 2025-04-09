@@ -1,4 +1,6 @@
 import os
+
+from airflow import Dataset
 from pendulum import datetime, duration
 
 from airflow.decorators import dag
@@ -31,7 +33,14 @@ with open(README_FILE_PATH, "r") as readme_file:
 @dag(
     dag_id=DAG_ID,
     start_date=datetime(2024, 10, 12),
-    schedule=None,
+    schedule=(
+            Dataset('postgres://postgresql.raports.net:5432/dwh.jaffle_shop.raw_customers')
+            | Dataset('postgres://postgresql.raports.net:5432/dwh.jaffle_shop.raw_items')
+            | Dataset('postgres://postgresql.raports.net:5432/dwh.jaffle_shop.raw_orders')
+            | Dataset('postgres://postgresql.raports.net:5432/dwh.jaffle_shop.raw_products')
+            | Dataset('postgres://postgresql.raports.net:5432/dwh.jaffle_shop.raw_stores')
+            | Dataset('postgres://postgresql.raports.net:5432/dwh.jaffle_shop.raw_supplies')
+    ),
     catchup=False,
     doc_md=readme_content,
     tags=['dbt', 'postgresql'],
