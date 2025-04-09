@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime, timedelta
+from pendulum import datetime, duration
 
 from airflow import Dataset
 from airflow.decorators import dag
@@ -10,7 +10,6 @@ from airflow_clickhouse_plugin.operators.clickhouse import ClickHouseOperator
 
 
 DAG_ID = 'app_metrica__el'
-
 
 README_FILE_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/README.md"
 
@@ -36,13 +35,13 @@ with open(SLING_FILE_PATH) as sling_file:
     tags=['sling', 'minio', 'clickhouse'],
     default_args={
         'owner': 'ramis.khasianov',
-        'retries': 0,
-        'retry_delay': timedelta(minutes=1),
+        'retries': 1,
+        'retry_delay': duration(minutes=1),
         'email_on_failure': True,
         'email': ['ramis.khasianov@raports.net']
     }
 )
-def app_metrica():
+def dag():
     create_base_table = ClickHouseOperator(
         task_id='create_base_table',
         database='default',
@@ -101,4 +100,4 @@ def app_metrica():
 
     create_base_table >> create_distributed_table >> run_sling
 
-app_metrica()
+dag()
