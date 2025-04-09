@@ -1,20 +1,20 @@
+import os
+from pendulum import datetime, duration
+
 from airflow.decorators import dag
-from airflow.models import Variable
-from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperator
+
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig
 from cosmos.constants import TestBehavior
-
-# adjust for other database types
 from cosmos.profiles import PostgresUserPasswordProfileMapping
 from cosmos.operators import DbtDocsS3Operator
-from pendulum import datetime
-import os
 
-DAG_ID = "jaffle_shop"
+
+DAG_ID = "jaffle_shop__t"
+
+README_FILE_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/README.md"
 
 DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/repo/dags/{DAG_ID}/dbt_project"
 DBT_EXECUTABLE_PATH = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
-
 
 profile_config = ProfileConfig(
     profile_name="dwh",
@@ -25,26 +25,26 @@ profile_config = ProfileConfig(
     ),
 )
 
-render_config=RenderConfig(
-    test_behavior=TestBehavior.AFTER_ALL,
-)
+with open(README_FILE_PATH, "r") as readme_file:
+    readme_content = readme_file.read()
 
 @dag(
     dag_id=DAG_ID,
     start_date=datetime(2024, 10, 12),
     schedule=None,
     catchup=False,
+    doc_md=readme_content,
+    tags=['dbt', 'postgresql'],
+    max_active_tasks=3,
+    default_args={
+        'owner': 'ramis.khasianov',
+        'retries': 1,
+        'retry_delay': duration(minutes=1),
+        'email_on_failure': True,
+        'email': ['ramis.khasianov@raports.net']
+    }
 )
 def dag():
-
-    run_airbyte = AirbyteTriggerSyncOperator(
-        task_id='run_airbyte',
-        airbyte_conn_id='default_airbyte.raports.net',
-        connection_id=Variable.get('airbyte-jaffle-shop'),
-        asynchronous=False,
-        timeout=3600,
-        wait_seconds=3
-    )
 
     run_dbt = DbtTaskGroup(
         group_id="run_dbt",
@@ -73,6 +73,6 @@ def dag():
         install_deps=True
     )
 
-    run_airbyte >> run_dbt >> generate_dbt_docs_to_s3
+    run_dbt >> generate_dbt_docs_to_s3
 
 dag()
