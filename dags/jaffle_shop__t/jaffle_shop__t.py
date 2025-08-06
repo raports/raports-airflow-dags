@@ -22,7 +22,7 @@ profile_config = ProfileConfig(
     profile_name="dwh",
     target_name="prod",
     profile_mapping=PostgresUserPasswordProfileMapping(
-        conn_id="postgres__postgresql.raports.io",
+        conn_id="dwh__postgresql.raports.io",
         profile_args={"schema": "public"},
     ),
 )
