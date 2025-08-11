@@ -4,7 +4,7 @@ name: "dbt_project"
 version: "3.0.0"
 require-dbt-version: ">=1.5.0"
 
-profile: "dbt_dev" # Put your profile here
+profile: "postgresql_raports_io" # Put your profile here
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -31,9 +31,9 @@ models:
     intermediate:
       +materialized: ephemeral
     core:
-      +materialized: table
+      +materialized: incremental
     marts:
-      +materialized: table
+      +materialized: incremental
 
 seeds:
   dbt_project:

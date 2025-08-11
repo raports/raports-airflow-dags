@@ -1,0 +1,34 @@
+version: 2
+
+sources:
+  - name: app_metrica
+    schema: app_metrica
+    description: Export of app metrica data for our app
+    tables:
+      - name: raw_usage_metrics_distributed
+        description: Main export with usage data
+        columns:
+          - name: date
+            description: Date of the usage event
+          - name: event
+            description: Type of event recorded (e.g., app open, purchase, etc.)
+          - name: purchase_sum
+            description: Sum of purchase amount for purchase events
+          - name: os_name
+            description: Operating system name of the device
+          - name: device_id
+            description: Unique identifier for the device
+          - name: gender
+            description: User gender information
+          - name: city
+            description: City where the event occurred
+          - name: utm_source
+            description: UTM source parameter for tracking marketing campaigns
+          - name: _sling_loaded_at
+            description: Timestamp when the record was loaded by Sling
+          - name: _sling_stream_url
+            description: URL of the Sling stream (s3 file) that this record was loaded from
+          - name: _sling_row_num
+            description: Row number of csv source
+          - name: _sling_exec_id
+            description: Execution ID from Sling
