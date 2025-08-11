@@ -23,7 +23,7 @@ profile_config = ProfileConfig(
     target_name="prod",
     profile_mapping=ClickhouseUserPasswordProfileMapping(
         conn_id="default__clickhouse.raports.io",
-        profile_args={"schema": "default"},
+        profile_args={"schema": "default", "cluster": "default"},
     ),
 )
 
