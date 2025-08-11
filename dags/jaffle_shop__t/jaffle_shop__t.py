@@ -48,7 +48,7 @@ with open(README_FILE_PATH, "r") as readme_file:
     max_active_tasks=3,
     default_args={
         "owner": "ramis.khasianov",
-        "retries": 1,
+        "retries": 0,
         "retry_delay": duration(minutes=1),
         "email_on_failure": True,
         "email": ["ramis.khasianov@raports.io"],

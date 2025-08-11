@@ -35,7 +35,7 @@ with open(SLING_FILE_PATH) as sling_file:
     tags=["sling", "minio", "clickhouse"],
     default_args={
         "owner": "ramis.khasianov",
-        "retries": 1,
+        "retries": 0,
         "retry_delay": duration(minutes=1),
         "email_on_failure": True,
         "email": ["ramis.khasianov@raports.io"],
