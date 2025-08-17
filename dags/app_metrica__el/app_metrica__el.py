@@ -42,6 +42,15 @@ with open(SLING_FILE_PATH) as sling_file:
     },
 )
 def dag():
+    create_database = ClickHouseOperator(
+        task_id="create_database",
+        database="default",
+        clickhouse_conn_id=clickhouse_conn.conn_id,
+        sql="""
+            create database if not exists app_metrica on cluster default
+        """,
+    )
+
     create_base_table = ClickHouseOperator(
         task_id="create_base_table",
         database="default",
