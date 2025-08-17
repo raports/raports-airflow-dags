@@ -1,4 +1,4 @@
-with raw as (select * from {{ source('app_metrica', 'raw_usage_metrics_distributed') }})
+with raw as (select * from {{ source('app_metrica', 'raw_usage_metrics') }})
 select
     date as reporting_date,
     event as app_event,

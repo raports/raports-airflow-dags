@@ -51,12 +51,12 @@ def dag():
         """,
     )
 
-    create_base_table = ClickHouseOperator(
-        task_id="create_base_table",
+    create_local_table = ClickHouseOperator(
+        task_id="create_local_table",
         database="default",
         clickhouse_conn_id=clickhouse_conn.conn_id,
         sql="""
-            create table if not exists app_metrica.raw_usage_metrics on cluster default (
+            create table if not exists app_metrica.raw_usage_metrics_local on cluster default (
                 `date` date,
                 `event` varchar(30),
                 `purchase_sum` decimal(12, 2),
@@ -70,7 +70,7 @@ def dag():
                 `_sling_row_num` integer,
                 `_sling_exec_id` varchar(36)
             )
-            engine = ReplicatedMergeTree('/clickhouse/tables/{shard}/app_metrica/raw_usage_metrics', '{replica}')
+            engine = ReplicatedMergeTree('/clickhouse/tables/{shard}/app_metrica/raw_usage_metrics_local', '{replica}')
             partition by `date`
             order by (`os_name`, `date`)
         """,
@@ -81,9 +81,9 @@ def dag():
         database="default",
         clickhouse_conn_id=clickhouse_conn.conn_id,
         sql="""
-            create table if not exists app_metrica.raw_usage_metrics_distributed on cluster default
-            as app_metrica.raw_usage_metrics
-            engine = Distributed(default, app_metrica, raw_usage_metrics, cityHash64(os_name));
+            create table if not exists app_metrica.raw_usage_metrics on cluster default
+            as app_metrica.raw_usage_metrics_local
+            engine = Distributed(default, app_metrica, raw_usage_metrics_local, cityHash64(os_name));
         """,
     )
 
@@ -109,7 +109,7 @@ def dag():
         },
     )
 
-    create_base_table >> create_distributed_table >> run_sling
+    create_database >> create_local_table >> create_distributed_table >> run_sling
 
 
 dag()

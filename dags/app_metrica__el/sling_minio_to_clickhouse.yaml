@@ -12,7 +12,7 @@ streams:
     single: true
     target_options:
       batch_limit: 2000000
-    object: 'app_metrica.raw_usage_metrics_distributed'
+    object: "app_metrica.raw_usage_metrics"
     columns:
       date: date
       event: string(30)

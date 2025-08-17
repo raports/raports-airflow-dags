@@ -5,7 +5,7 @@ sources:
     schema: app_metrica
     description: Export of app metrica data for our app
     tables:
-      - name: raw_usage_metrics_distributed
+      - name: raw_usage_metrics
         description: Main export with usage data
         columns:
           - name: date
