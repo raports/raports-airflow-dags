@@ -4,7 +4,11 @@
         engine="ReplicatedMergeTree('/clickhouse/tables/{shard}/{database}/{table}', '{replica}')",
         order_by='reporting_date, utm_source, os_name',
         partition_by='reporting_month_start_date',
-        sharding_key='cityHash64(record_hash)'
+        sharding_key='cityHash64(record_hash)',
+        pre_hook = [
+            "drop table if exists {{ this.schema }}.{{ this.identifier }}__dbt_backup on cluster default sync",
+            "drop table if exists {{ this.schema }}.{{ this.identifier }}_local__dbt_backup on cluster default sync"
+        ]
     )
 }}
 
