@@ -34,9 +34,7 @@ with open(README_FILE_PATH, "r") as readme_file:
 @dag(
     dag_id=DAG_ID,
     start_date=datetime(2024, 10, 12),
-    schedule=(
-        Dataset("clickhouse://clickhouse.clickhouse.svc.cluster.local:9000/app_metrica.raw_usage_metrics_distributed")
-    ),
+    schedule=(Dataset("clickhouse://clickhouse.clickhouse.svc.cluster.local:9000/app_metrica.raw_usage_metrics")),
     catchup=False,
     doc_md=readme_content,
     tags=["dbt", "clickhouse"],
