@@ -1,0 +1,12 @@
+source: postgresql_raports_io__dwh__prod
+target: postgresql_raports_io__dwh
+
+defaults:
+  mode: full-refresh
+  object: "{stream_schema}.{stream_table}"
+
+streams:
+  jaffle_shop.raw_*:
+
+env:
+  SLING_LOADED_AT_COLUMN: false

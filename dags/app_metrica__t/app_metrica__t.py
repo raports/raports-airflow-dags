@@ -22,7 +22,7 @@ profile_config = ProfileConfig(
     profile_name="clickhouse_raports_io",
     target_name="prod",
     profile_mapping=ClickhouseUserPasswordProfileMapping(
-        conn_id="default__clickhouse.raports.io",
+        conn_id="clickhouse_raports_io",
         profile_args={"schema": "default", "cluster": "default"},
     ),
 )
@@ -34,7 +34,7 @@ with open(README_FILE_PATH, "r") as readme_file:
 @dag(
     dag_id=DAG_ID,
     start_date=datetime(2024, 10, 12),
-    schedule=(Dataset("clickhouse://clickhouse.clickhouse.svc.cluster.local:9000/app_metrica.raw_usage_metrics")),
+    schedule=(Dataset("clickhouse://clickhouse.raports.io:8123/app_metrica.raw_usage_metrics")),
     catchup=False,
     doc_md=readme_content,
     tags=["dbt", "clickhouse"],
@@ -66,7 +66,7 @@ def dag():
         task_id="generate_dbt_docs_to_s3",
         profile_config=profile_config,
         project_dir=DBT_PROJECT_PATH,
-        connection_id="default__minio.raports.io",
+        connection_id="minio_raports_io",
         bucket_name="dbt-docs",
         dbt_executable_path=DBT_EXECUTABLE_PATH,
         folder_dir=DAG_ID,

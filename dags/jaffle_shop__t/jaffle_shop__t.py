@@ -22,7 +22,7 @@ profile_config = ProfileConfig(
     profile_name="dwh",
     target_name="prod",
     profile_mapping=PostgresUserPasswordProfileMapping(
-        conn_id="dwh__postgresql.raports.io",
+        conn_id="postgresql_raports_io__dwh",
         profile_args={"schema": "public"},
     ),
 )
@@ -73,7 +73,7 @@ def dag():
         task_id="generate_dbt_docs_to_s3",
         profile_config=profile_config,
         project_dir=DBT_PROJECT_PATH,
-        connection_id="default__minio.raports.io",
+        connection_id="minio_raports_io",
         bucket_name="dbt-docs",
         dbt_executable_path=DBT_EXECUTABLE_PATH,
         folder_dir=DAG_ID,

@@ -1,5 +1,5 @@
-source: minio_app_metrica
-target: clickhouse
+source: minio_raports_io__app_metrica
+target: clickhouse_raports_io
 
 defaults:
   mode: incremental

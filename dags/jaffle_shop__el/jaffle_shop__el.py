@@ -26,10 +26,10 @@ with open(README_FILE_PATH, "r") as readme_file:
 )
 def dag():
 
-    run_airbyte = AirbyteTriggerSyncOperator(
+    AirbyteTriggerSyncOperator(
         task_id="run_airbyte",
-        airbyte_conn_id="default__airbyte.raports.io",
-        connection_id=Variable.get("airbyte__jaffle_shop"),
+        airbyte_conn_id="airbyte_raports_io",
+        connection_id="ea9065a2-2bcc-480f-a801-35f360909924",
         asynchronous=False,
         timeout=3600,
         wait_seconds=3,
