@@ -34,12 +34,12 @@ def dag():
         timeout=3600,
         wait_seconds=3,
         outlets=[
-            Dataset("postgres://postgresql.raports.io:5432/postgres.jaffle_shop.raw_customers"),
-            Dataset("postgres://postgresql.raports.io:5432/postgres.jaffle_shop.raw_items"),
-            Dataset("postgres://postgresql.raports.io:5432/postgres.jaffle_shop.raw_orders"),
-            Dataset("postgres://postgresql.raports.io:5432/postgres.jaffle_shop.raw_products"),
-            Dataset("postgres://postgresql.raports.io:5432/postgres.jaffle_shop.raw_stores"),
-            Dataset("postgres://postgresql.raports.io:5432/postgres.jaffle_shop.raw_supplies"),
+            Dataset("postgres://postgresql.raports.io:5432/dwh.jaffle_shop.raw_customers"),
+            Dataset("postgres://postgresql.raports.io:5432/dwh.jaffle_shop.raw_items"),
+            Dataset("postgres://postgresql.raports.io:5432/dwh.jaffle_shop.raw_orders"),
+            Dataset("postgres://postgresql.raports.io:5432/dwh.jaffle_shop.raw_products"),
+            Dataset("postgres://postgresql.raports.io:5432/dwh.jaffle_shop.raw_stores"),
+            Dataset("postgres://postgresql.raports.io:5432/dwh.jaffle_shop.raw_supplies"),
         ],
     )
 
