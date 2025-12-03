@@ -1,0 +1,34 @@
+source: neon_tech__raports__chinook
+target: postgresql_raports_io__dwh
+
+defaults:
+  mode: truncate
+  target_options:
+    column_casing: snake
+
+streams:
+  public.Album:
+    object: chinook.raw_album
+  public.Artist:
+    object: chinook.raw_artist
+  public.Customer:
+    object: chinook.raw_customer
+  public.Employee:
+    object: chinook.raw_employee
+  public.Genre:
+    object: chinook.raw_genre
+  public.Invoice:
+    object: chinook.raw_invoice
+  public.InvoiceLine:
+    object: chinook.raw_invoice_line
+  public.MediaType:
+    object: chinook.raw_media_type
+  public.Playlist:
+    object: chinook.raw_playlist
+  public.PlaylistTrack:
+    object: chinook.raw_playlist_track
+  public.Track:
+    object: chinook.raw_track
+
+env:
+  SLING_LOADED_AT_COLUMN: timestamp
